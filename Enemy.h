@@ -2,12 +2,15 @@
 #define ENEMY_H
 
 #include<SFML/Graphics.hpp>
+#include <iostream>
 
 class Enemy
 {
 private:
+	sf::Texture e_texture;
+	sf::Sprite e_sprite;
+	
 	unsigned pointCount;
-	sf::CircleShape shape;
 	int type;
 	float speed;
 	int hp;
@@ -16,7 +19,8 @@ private:
 	int points;
 
 	void initVariables();
-	void initShape();
+	void initTexture();
+	void initSprite();
 
 public:
 	Enemy(float pos_x, float pos_y);
