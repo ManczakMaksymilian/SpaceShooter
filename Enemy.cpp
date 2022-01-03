@@ -2,7 +2,7 @@
 
 void Enemy::initVariables()
 {
-	this->pointCount = rand() % 8 + 3; //min = 3 max = 10
+	this->pointCount = 5;
 	this->type = 0;
 	this->speed = 1.f;
 	this->hpMax = static_cast<int>(this->pointCount);
@@ -11,20 +11,32 @@ void Enemy::initVariables()
 	this->points = this->pointCount;
 }
 
-void Enemy::initShape()
+void Enemy::initTexture()
 {
-	this->shape.setRadius(this->pointCount * 5);
-	this->shape.setPointCount(this->pointCount);
-	this->shape.setFillColor(sf::Color(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1, 255));
+	if (!this->e_texture.loadFromFile("Textures/enemy.png"))
+	{
+		std::cout << "ERROR::ENEMY::INITTEXTURE::Could not load texture file." << "\n";
+	}
+}
+
+void Enemy::initSprite()
+{
+	//Set the texture to the sprite
+	this->e_sprite.setTexture(this->e_texture);
+
+	//Resize the sprite
+	this->e_sprite.scale(0.2f, 0.2f);
 }
 
 Enemy::Enemy(float pos_x, float pos_y)
 {
 	this->initVariables();
-	this->initShape();
+	this->initTexture();
+	this->initSprite();
 
-	this->shape.setPosition(pos_x, pos_y);
+	this->e_sprite.setPosition(pos_x, pos_y);
 }
+
 
 Enemy::~Enemy()
 {
@@ -34,7 +46,7 @@ Enemy::~Enemy()
 //Accessors
 const sf::FloatRect Enemy::getBounds() const
 {
-	return this->shape.getGlobalBounds();
+	return this->e_sprite.getGlobalBounds();
 }
 
 const int& Enemy::getPoints() const
@@ -50,10 +62,10 @@ const int& Enemy::getDamage() const
 //Functions
 void Enemy::update()
 {
-	this->shape.move(0.f, this->speed);
+	this->e_sprite.move(0.f, this->speed);
 }
 
 void Enemy::render(sf::RenderTarget* target)
 {
-	target->draw(this->shape);
+	target->draw(this->e_sprite);
 }
