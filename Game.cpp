@@ -158,6 +158,20 @@ void Game::updateInput()
 			)
 		);
 	}
+	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && this->player->canAttack())
+	{
+		this->bullets.push_back(
+			new Bullet(
+				this->textures["BULLET"],
+				this->player->getPos().x + this->player->getBounds().width / 2.f,
+				this->player->getPos().y,
+				0.f,
+				-1.f,
+				5.f
+			)
+		);
+	}
 }
 
 void Game::updateGUI()
